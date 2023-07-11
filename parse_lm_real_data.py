@@ -10,7 +10,7 @@ from pathlib import Path
 from tqdm import tqdm
 from loguru import logger
 
-from src.utils.data_utils import get_image_crop_resize, get_K_crop_resize
+from src.utils.data_utils import get_image_crop_resize, get_K_crop_resize, get_masked_image
 
 id2name_dict = {
     1: "ape",
@@ -111,12 +111,16 @@ if __name__ == "__main__":
     intrin_path = osp.join(output_data_seq_dir, "intrin_ba")
     intrin_origin_path = osp.join(output_data_seq_dir, "intrin")
     poses_path = osp.join(output_data_seq_dir, "poses_ba")
+    masked_path = osp.join(output_data_seq_dir, "masked")
+    boxes_path = osp.join(output_data_seq_dir, "boxes")
+
     Path(color_path).mkdir(exist_ok=True)
     Path(color_full_path).mkdir(exist_ok=True)
     Path(intrin_path).mkdir(exist_ok=True)
     Path(intrin_origin_path).mkdir(exist_ok=True)
     Path(poses_path).mkdir(exist_ok=True)
-
+    Path(masked_path).mkdir(exist_ok=True)
+    Path(boxes_path).mkdir(exist_ok=True)
     # Save model info:
     if args.split == "train":
         model_min_xyz = np.array(
@@ -231,6 +235,7 @@ if __name__ == "__main__":
         resize_shape = np.array([y1 - y0, x1 - x0])
         K_crop, K_crop_homo = get_K_crop_resize(box, K, resize_shape)
         image_crop, _ = get_image_crop_resize(original_img, box, resize_shape)
+        image_masked = get_masked_image(original_img , box)
 
         box_new = np.array([0, 0, x1 - x0, y1 - y0])
         resize_shape = np.array([256, 256])
@@ -239,7 +244,9 @@ if __name__ == "__main__":
 
         # Save to aim dir:
         cv2.imwrite(osp.join(color_path, str(global_id) + img_ext), image_crop)
+        cv2.imwrite(osp.join(masked_path, str(global_id) + img_ext), image_masked)
         cv2.imwrite(osp.join(color_full_path, str(global_id) + img_ext), original_img)
         np.savetxt(osp.join(intrin_path, str(global_id) + ".txt"), K_crop)
         np.savetxt(osp.join(intrin_origin_path, str(global_id) + ".txt"), K) # NOTE: intrinsic of full image. Used to eval Proj2D metric
         np.savetxt(osp.join(poses_path, str(global_id) + ".txt"), pose)
+        np.savetxt(osp.join(boxes_path, str(global_id) + ".txt"), box)

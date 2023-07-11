@@ -5,9 +5,10 @@ channels:
   - defaults
 dependencies:
   - python=3.7
-  - pytorch=1.8.0
+  - pytorch=1.8.1
   - torchvision=0.9.1
-  - cudatoolkit=10.1
+  #- torchvision=0.10.0
+  - cudatoolkit=10.2
   - ipython
   - tqdm
   - matplotlib

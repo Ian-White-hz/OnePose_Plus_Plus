@@ -84,7 +84,9 @@ def detector_free_coarse_matching(
                 )
                 for subset_ids in all_subset_ids
             ]
-            pb.print_until_done() if pb is not None else None
+            print("done1")
+            #pb.print_until_done() if pb is not None else None
+            print("done")
             results = ray.get(obj_refs)
             matches = dict(ChainMap(*results))
             logger.info("Matcher finish!")

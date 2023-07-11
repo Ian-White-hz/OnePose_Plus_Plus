@@ -79,6 +79,9 @@ def add_pointcloud_to_vis3d(pointcloud_pth, dump_dir, save_name):
     vis3d = Vis3D(dump_dir, save_name)
     vis3d.add_point_cloud(pointcloud_pth, name="filtered_pointcloud")
 
+def add_kpc_to_vis3d(img0, img1, kpts0, kpts1,dump_dir, save_name):
+    vis3d = Vis3D(dump_dir, save_name)
+    vis3d.add_keypoint_correspondences(img0, img1, kpts0, kpts1, unmatched_kpts0 = None, unmatched_kpts1 = None, metrics = None, booleans = None, meta = None, name = None)
 
 def save_demo_image(pose_pred, K, image_path, box3d, draw_box=True, save_path=None):
     """ 

@@ -85,6 +85,8 @@ def vis_tkl_filtered_pcds(model_path, points_count_list, track_length, output_pa
 
     if vis3d_pth is not None:
         dump_dir, name = vis3d_pth.rsplit('/',1)
+        print(dump_dir)
+        print(name)
         add_pointcloud_to_vis3d(output_file_path, dump_dir, name)
 
     return output_file_path

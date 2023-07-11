@@ -9,6 +9,7 @@ from src.KeypointFreeSfM.loftr_for_sfm import LoFTR_for_OnePose_Plus, default_cf
 from src.utils.colmap.read_write_model import read_model
 from src.utils.data_utils import get_K_crop_resize, get_image_crop_resize
 from src.utils.vis_utils import reproj
+from src.utils.vis_utils import add_kpc_to_vis3d
 
 cfgs = {
     "model": {
@@ -35,7 +36,7 @@ def build_2D_match_model(args):
     return matcher
 
 class LocalFeatureObjectDetector():
-    def __init__(self, sfm_ws_dir, n_ref_view=15, output_results=False, detect_save_dir=None, K_crop_save_dir=None):
+    def __init__(self, sfm_ws_dir, n_ref_view=15, output_results=True, detect_save_dir=None, K_crop_save_dir=None):
         matcher = build_2D_match_model(cfgs['model']) 
         self.matcher = matcher.cuda()
         self.db_imgs, self.db_corners_homo = self.load_ref_view_images(sfm_ws_dir, n_ref_view)
@@ -80,7 +81,27 @@ class LocalFeatureObjectDetector():
             self.matcher(match_data)
             mkpts0 = match_data["mkpts0_f"].cpu().numpy()
             mkpts1 = match_data["mkpts1_f"].cpu().numpy()
-
+            wis3d_pth = osp.join(
+            "/mnt/data2/interns/gid-baiyan/OnePose_Plus_Plus/data/datasets/sfm_output",
+            "outputs",
+            "vis3d",
+            "01",
+            str(idx),
+            )
+            result_save_pth = osp.join(
+            "/mnt/data2/interns/gid-baiyan/OnePose_Plus_Plus/data/datasets/sfm_output",
+            "outputs",
+            "result",
+            "01",
+            )
+            dump_dir, name = wis3d_pth.rsplit('/',1)
+            image0=np.asarray(db_img.cpu().numpy()[0][0]*256).astype(np.uint8)
+            image1=np.asarray(query.cpu().numpy()[0][0]*256).astype(np.uint8)
+            #print(image0)
+            #cv2.imwrite(result_save_pth,str(idx) + '.png',image0)
+            #print(dump_dir)
+            #print(name)
+            add_kpc_to_vis3d(image0, image1,mkpts0,mkpts1,dump_dir, name)
             if mkpts0.shape[0] < 6:
                 affine = None
                 inliers = np.empty((0))

@@ -254,6 +254,11 @@ def get_image_crop_resize(image, box, resize_shape):
     trans_crop_homo = np.concatenate([trans_crop, np.array([[0, 0, 1]])], axis=0)
     return image_crop, trans_crop_homo
 
+def get_masked_image(image, box):
+    mask = -1 * image
+    mask[box[1]:box[3],box[0]:box[2],:] = 0
+    image_masked = image + mask
+    return image_masked
 
 def get_K_crop_resize(box, K_orig, resize_shape):
     """Update K (crop an image according to the box, and resize the cropped image to resize_shape) 

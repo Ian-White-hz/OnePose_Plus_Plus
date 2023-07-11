@@ -145,7 +145,7 @@ def inference_core(cfg, data_root, seq_dir, sfm_model_dir):
     
     # Output video to visualize estimated poses:
     logger.info(f"Generate demo video begin...")
-    vis_utils.make_video(paths["vis_box_dir"], paths["demo_video_path"])
+    #vis_utils.make_video(paths["vis_box_dir"], paths["demo_video_path"])
 
 def inference(cfg):
     data_dirs = cfg.data_base_dir
