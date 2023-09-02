@@ -15,10 +15,10 @@ echo '--------------------------------------------------------------'
 echo 'Run Keypoint-Free SfM to reconstruct object point cloud for pose estimation:'
 echo '--------------------------------------------------------------'
 #Run SfM to reconstruct object sparse point cloud from $OBJ_NAME-annotate sequence:
-# python $PROJECT_DIR/run.py \
-#     +preprocess="sfm_demo" \
-#     dataset.data_dir="[$PROJECT_DIR/data/demo/$OBJ_NAME $OBJ_NAME-annotate]" \
-#     dataset.outputs_dir="$PROJECT_DIR/data/demo/sfm_model" \
+python $PROJECT_DIR/run.py \
+    +preprocess="sfm_demo" \
+    dataset.data_dir="[$PROJECT_DIR/data/demo/$OBJ_NAME $OBJ_NAME-annotate]" \
+    dataset.outputs_dir="$PROJECT_DIR/data/demo/sfm_model" \
 
 echo "-----------------------------------"
 echo "Run inference and output demo video:"
