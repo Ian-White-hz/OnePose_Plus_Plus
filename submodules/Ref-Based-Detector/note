@@ -1,0 +1,4 @@
+export RGB_PATH=/mnt/data2/interns/gid-baiyan/OnePose_Plus_Plus/data/datasets/LM_dataset/0801-lm1-others/lm1-3/color_full/0.png
+export OUTPUT_DIR=/mnt/data2/interns/gid-baiyan/OnePose_Plus_Plus/data/datasets/LM_dataset/0801-lm1-others/lm1-1/color
+export RGB_PATH=/mnt/data2/interns/gid-baiyan/OnePose_Plus_Plus/data/demo/lamp/lamp-test/color_full/0.png
+export OUTPUT_DIR=/mnt/data2/interns/gid-baiyan/OnePose_Plus_Plus/data/demo/lamp/lamp-annotate/color

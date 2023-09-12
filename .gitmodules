@@ -4,3 +4,6 @@
 [submodule "submodules/DeepLM"]
 	path = submodules/DeepLM
 	url = https://github.com/hjwdzh/DeepLM
+[submodule "Ref-Based-Detector"]
+	path = Ref-Based-Detector
+	url = https://github.com/Ian-White-hz/Ref-Based-Detector.git

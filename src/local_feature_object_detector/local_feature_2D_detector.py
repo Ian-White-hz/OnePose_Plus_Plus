@@ -4,11 +4,6 @@ import torch
 import numpy as np
 import natsort
 import pytorch_lightning as pl
-import kornia as K
-import kornia.feature as KF
-import torch.nn.functional as F
-import torchvision.transforms as transforms
-from wis3d import Wis3D as Vis3D
 
 from src.KeypointFreeSfM.loftr_for_sfm import LoFTR_for_OnePose_Plus, default_cfg
 from src.utils.colmap.read_write_model import read_model
@@ -45,7 +40,6 @@ class LocalFeatureObjectDetector():
     def __init__(self, sfm_ws_dir, n_ref_view=15, output_results=True, detect_save_dir=None, K_crop_save_dir=None):
         matcher = build_2D_match_model(cfgs['model']) 
         self.matcher = matcher.cuda()
-        self.test_matcher = KF.LoFTR(pretrained="outdoor")
         self.db_imgs, self.db_corners_homo = self.load_ref_view_images(sfm_ws_dir, n_ref_view)
         self.output_results = output_results
         self.detect_save_dir = detect_save_dir

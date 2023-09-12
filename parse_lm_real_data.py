@@ -43,6 +43,7 @@ def parse_args():
     parser.add_argument("--assign_onepose_id", type=str, default="0801")
     parser.add_argument("--add_detector_noise", action='store_true')
     parser.add_argument("--use_yolo_box", action='store_true')
+    parser.add_argument("--use_ref_based_detector", action='store_true')
     parser.add_argument("--yolo_box_base_path", default="data/LINEMOD/yolo_detection")
 
     # Output:
@@ -198,6 +199,9 @@ if __name__ == "__main__":
                 x0, y0, w, h = int(x0_n * img_w), int(y0_n * img_h), int(w_n * img_w), int(h_n * img_h)
                 x1, y1 = x0 + w, y0 + h
 
+            elif args.use_ref_based_detector:
+                logger.info(f"Using ref-based detector")
+                pass
             else:
                 # Use GT box
                 x0, y0, w, h = (
